@@ -116,7 +116,6 @@ INSERT INTO `funcionario` (`codigo`, `nome`, `endereco`, `email`, `senha`) VALUE
 INSERT INTO `funcionario` (`codigo`, `nome`, `endereco`, `email`, `senha`) VALUES (1020, 'Letícia Guedes', 'Rua JK', 'le_10_lele@hotmail.com', 'leeh1995');
 INSERT INTO `funcionario` (`codigo`, `nome`, `endereco`, `email`, `senha`) VALUES (1030, 'João Oliveira', 'Largo Grimmauld, 12', 'joao@talugo.com', 'joao12345');
 INSERT INTO `funcionario` (`codigo`, `nome`, `endereco`, `email`, `senha`) VALUES (1040, 'Isabella', 'Rua Andre Doria', 'isabella@gmail.com', 'isabella12345');
-INSERT INTO `funcionario` (`codigo`, `nome`, `endereco`, `email`, `senha`) VALUES (, NULL, NULL, NULL, NULL);
 
 COMMIT;
 
