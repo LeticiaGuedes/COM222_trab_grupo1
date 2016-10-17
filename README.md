@@ -26,5 +26,5 @@ Esse arquivo utiliza o pattern Factory para esconder a conexão do JDBC. Dessa f
 
 Todos os arquivos java utilizam de namespace afim de separa-los logicamente.
 Esse namespace são compostos pelo prefixo "br.com.com222" seguido do nome do pacote e subpacote quanto ocorrer, como por exemplo:
-	- br.com.com222.jdbc		(exemplo de nome de pacote)
-	- br.com.com222.jdbc.dao	(exemplo de nome de subpacote)
+	- br.com.com222.jdbc		(exemplo de nome de pacote);
+	- br.com.com222.jdbc.dao	(exemplo de nome de subpacote);
