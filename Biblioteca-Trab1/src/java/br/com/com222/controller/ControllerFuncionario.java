@@ -47,7 +47,7 @@ public class ControllerFuncionario extends HttpServlet {
         String acao = request.getParameter("acao");
 
         if (acao == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/cad_associado.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/view/cad_associado.jsp");
             rd.forward(request, response);
         }
         RequestDispatcher rd;

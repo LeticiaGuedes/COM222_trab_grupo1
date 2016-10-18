@@ -20,7 +20,7 @@
     </head>
     <body>
         <%
-            String redirectURL = "http://localhost:8080/Biblioteca-Trab1/View/login.jsp";
+            String redirectURL = "login.jsp";
             response.sendRedirect(redirectURL);
         %>
     </body>
