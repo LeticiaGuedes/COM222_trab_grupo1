@@ -14,7 +14,8 @@ public class Exemplar {
     private int publicacao_ISBN;
     private int numero;
     private float preco;
-    private int status; 
+    private int status;
+    private Publicacao pub;
 
     public int getPublicacao_ISBN() {
         return publicacao_ISBN;
@@ -46,5 +47,13 @@ public class Exemplar {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Publicacao getPub() {
+        return pub;
+    }
+
+    public void setPub(Publicacao pub) {
+        this.pub = pub;
     }
 }
