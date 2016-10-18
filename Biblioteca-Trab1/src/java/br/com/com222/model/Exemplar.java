@@ -14,7 +14,7 @@ public class Exemplar extends Publicacao{
     private int numero;
     private float preco;
     private int status;
-    private Publicacao pub;
+    
 
     public Exemplar () {
         super();
@@ -52,11 +52,4 @@ public class Exemplar extends Publicacao{
         this.status = status;
     }
 
-    public Publicacao getPub() {
-        return pub;
-    }
-
-    public void setPub(Publicacao pub) {
-        this.pub = pub;
-    }
 }

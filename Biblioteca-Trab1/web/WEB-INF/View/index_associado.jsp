@@ -13,7 +13,7 @@
         <div style="padding-top: 70px;" class="container">
             <div class="col-sm-6 col-sm-offset-3">
                 <h1 class="page-title">
-                    Bem vindo, ${userAssociado.name}
+                    Bem vindo, ${userAssociado.nome}
                 </h1>
 
                 <div class="form-group">

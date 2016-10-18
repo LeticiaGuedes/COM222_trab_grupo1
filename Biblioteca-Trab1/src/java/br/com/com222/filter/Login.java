@@ -10,8 +10,6 @@ import br.com.com222.jdbc.dao.FuncionarioDao;
 import br.com.com222.model.Associado;
 import br.com.com222.model.Funcionario;
 import java.io.IOException;
-import java.io.PrintWriter;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,10 +53,10 @@ public class Login extends HttpServlet {
                 //cria uma nova sesssão
                 request.getSession().invalidate();
                 HttpSession sessao = request.getSession();
-                sessao.setAttribute("funcionaro", funcionario);
+                sessao.setAttribute("userFuncionario", funcionario);
                 
 
-                url = "/WEB-INF/View/menu_funcionario.html";
+                url = "/WEB-INF/View/index_funcionario.jsp";
 
             } else {
                 url = "/login_funcionario.jsp";
@@ -71,7 +69,7 @@ public class Login extends HttpServlet {
                 //cria nova sessão
                 request.getSession().invalidate();
                 HttpSession sessao = request.getSession();
-                sessao.setAttribute("associado", associado);
+                sessao.setAttribute("userAssociado", associado);
                 
                 url = "/WEB-INF/View/index_associado.jsp";
 
