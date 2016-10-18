@@ -5,6 +5,9 @@
  */
 package br.com.com222.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author wallace
@@ -16,18 +19,20 @@ public class Associado {
     private String email;
     private String senha;
     private String status;
+    private List<Emprestimo> listaEmp;
 
     public Associado() {
         
     }
     
-    public Associado(int codigo, String nome, String endereco, String email, String senha, String status) {
+    public Associado(int codigo, String nome, String endereco, String email, String senha, String status, List<Emprestimo> lista) {
         this.codigo = codigo;
         this.nome = nome;
         this.endereco = endereco;
         this.email = email;
         this.senha = senha;
         this.status = status;
+        this.listaEmp = lista;
     }
     
     public int getCodigo() {

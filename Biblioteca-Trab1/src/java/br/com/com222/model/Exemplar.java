@@ -10,19 +10,22 @@ package br.com.com222.model;
  * 
  */
 
-public class Exemplar {
-    private int publicacao_ISBN;
+public class Exemplar extends Publicacao{
     private int numero;
     private float preco;
     private int status; 
 
-    public int getPublicacao_ISBN() {
-        return publicacao_ISBN;
+    public Exemplar () {
+        super();
     }
-
-    public void setPublicacao_ISBN(int publicacao_ISBN) {
-        this.publicacao_ISBN = publicacao_ISBN;
+    
+    public Exemplar(int ISBN, int numero, float preco, int status, String titulo, String autor, String editora, int ano) {
+        super(ISBN, titulo, autor, editora, ano);
+        this.numero = numero;
+        this.preco = preco;
+        this.status = status;
     }
+    
 
     public int getNumero() {
         return numero;

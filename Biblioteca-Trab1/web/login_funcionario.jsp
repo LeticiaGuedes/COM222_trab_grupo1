@@ -16,7 +16,7 @@
                     Entrar
                 </h1>
 
-                <form action="loginFuncionario" method="post">
+                <form action="funcionario" method="post">
 
                     <div class="form-group">
                         <label>Código</label>

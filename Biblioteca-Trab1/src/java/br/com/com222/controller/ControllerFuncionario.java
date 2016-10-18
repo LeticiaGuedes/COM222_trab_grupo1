@@ -38,7 +38,7 @@ public class ControllerFuncionario extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
 
         Funcionario fc = (Funcionario) request.getSession().getAttribute("funcionario");
-
+        
         //verifica login
         if (fc == null) {
             response.sendRedirect("");
@@ -60,7 +60,7 @@ public class ControllerFuncionario extends HttpServlet {
                 String senha = request.getParameter("senha");
                 String status = request.getParameter("status");
 
-                Associado assoc = new Associado(cod, nome, endereco, email, senha, status);
+                Associado assoc = new Associado(cod, nome, endereco, email, senha, status, null);
 
                 AssociadoDao ad = new AssociadoDao();
                 ad.cadastro(assoc);

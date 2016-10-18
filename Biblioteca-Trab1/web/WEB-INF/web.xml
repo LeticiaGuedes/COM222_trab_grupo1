@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <servlet>
-        <servlet-name>LoginFuncionario</servlet-name>
-        <servlet-class>br.com.com222.filter.LoginFuncionario</servlet-class>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>br.com.com222.filter.Login</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>teste</servlet-name>
@@ -13,8 +13,12 @@
         <servlet-class>br.com.com222.controller.ControllerFuncionario</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>LoginFuncionario</servlet-name>
-        <url-pattern>/loginFuncionario</url-pattern>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/funcionario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/associado</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>teste</servlet-name>
@@ -22,7 +26,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ControllerFuncionario</servlet-name>
-        <url-pattern>/funcionario</url-pattern>
+        <url-pattern>/funcionarioController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

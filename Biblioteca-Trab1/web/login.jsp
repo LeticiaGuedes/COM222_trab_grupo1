@@ -15,7 +15,7 @@
                  <h1 class="page-title">
                     Entrar
                 </h1>
-                <form action="" method="post">
+                <form action="associado" method="post">
 
                     <div class="form-group">
                         <label>Código</label>

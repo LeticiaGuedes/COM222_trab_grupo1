@@ -15,6 +15,18 @@ public class Publicacao {
     private String autor;
     private String editora;
     private int ano;
+    
+    public Publicacao() {
+        
+    }
+    
+    public Publicacao(int isbn, String titulo, String autor, String editora, int ano) {
+        this.ISBN = isbn;
+        this.ano = ano;
+        this.autor = autor;
+        this.editora = editora;
+        this.titulo = titulo;
+    }
 
     public int getISBN() {
         return ISBN;
