@@ -13,7 +13,8 @@ package br.com.com222.model;
 public class Exemplar extends Publicacao{
     private int numero;
     private float preco;
-    private int status; 
+    private int status;
+    private Publicacao pub;
 
     public Exemplar () {
         super();
@@ -49,5 +50,13 @@ public class Exemplar extends Publicacao{
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public Publicacao getPub() {
+        return pub;
+    }
+
+    public void setPub(Publicacao pub) {
+        this.pub = pub;
     }
 }
