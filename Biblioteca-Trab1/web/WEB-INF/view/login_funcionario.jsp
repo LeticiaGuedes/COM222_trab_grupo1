@@ -1,7 +1,19 @@
-<%-- any content can be specified here e.g.: --%>
-<%@ page pageEncoding="UTF-8" %>
-<div class="text-right">
-	<a href="login_funcionario.html">Login de Associados</a>
+<%-- 
+    Document   : login_funcionario
+    Created on : 17/10/2016, 11:00:20
+    Author     : wallace
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>JSP Page</title>
+    </head>
+    <body>
+        <div class="text-right">
+	<a href="index.jsp">Login Associados</a>
 </div>
 <h1 class="page-title">
 	Entrar
@@ -24,3 +36,6 @@
 	</div>
 
 </form>
+
+    </body>
+</html>

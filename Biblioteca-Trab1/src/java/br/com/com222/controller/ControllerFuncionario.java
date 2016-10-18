@@ -3,24 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.com222.filter;
+package br.com.com222.controller;
 
-import br.com.com222.jdbc.dao.FuncionarioDao;
+import br.com.com222.jdbc.dao.AssociadoDao;
+import br.com.com222.model.Associado;
 import br.com.com222.model.Funcionario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author wallace
  */
-public class LoginFuncionario extends HttpServlet {
+public class ControllerFuncionario extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,28 +35,43 @@ public class LoginFuncionario extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        
-        int codigo = Integer.parseInt(request.getParameter("codigo"));
-        String pass = request.getParameter("senha");
-        
-        
-        FuncionarioDao fd = new FuncionarioDao();
-        Funcionario funcionario = fd.login(codigo, pass);
-        
-        if(funcionario != null) {
-            
-            //cria uma nova sesssão
-            request.getSession().invalidate();
-            HttpSession sessao = request.getSession();
-            
-            sessao.setAttribute("funcionario", funcionario);
-            response.sendRedirect("funcionario");
-            
-        } else {
-            RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
+            throws ServletException, IOException, ClassNotFoundException {
+
+        Funcionario fc = (Funcionario) request.getSession().getAttribute("funcionario");
+
+        //verifica login
+        if (fc == null) {
+            response.sendRedirect("");
+        }
+
+        String acao = request.getParameter("acao");
+
+        if (acao == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/view/cad_associado.jsp");
             rd.forward(request, response);
         }
+        RequestDispatcher rd;
+        switch (acao) {
+            case "cadastro_associado":
+                int cod = Integer.parseInt(request.getParameter("codigo"));
+                String nome = request.getParameter("nome");
+                String email = request.getParameter("email");
+                String endereco = request.getParameter("endereco");
+                String senha = request.getParameter("senha");
+                String status = request.getParameter("status");
+
+                Associado assoc = new Associado(cod, nome, endereco, email, senha, status);
+
+                AssociadoDao ad = new AssociadoDao();
+                ad.cadastro(assoc);
+                rd = request.getRequestDispatcher("/ok.jsp");
+
+                break;
+            default:
+                rd = request.getRequestDispatcher("/WEB-INF/view/cad_associado.jsp");
+
+        }
+        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,7 +86,11 @@ public class LoginFuncionario extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ControllerFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -82,7 +104,11 @@ public class LoginFuncionario extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ControllerFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

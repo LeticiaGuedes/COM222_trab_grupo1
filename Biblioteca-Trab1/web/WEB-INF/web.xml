@@ -8,6 +8,10 @@
         <servlet-name>teste</servlet-name>
         <servlet-class>br.com.com222.controller.teste</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControllerFuncionario</servlet-name>
+        <servlet-class>br.com.com222.controller.ControllerFuncionario</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginFuncionario</servlet-name>
         <url-pattern>/loginFuncionario</url-pattern>
@@ -16,9 +20,13 @@
         <servlet-name>teste</servlet-name>
         <url-pattern>/teste</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControllerFuncionario</servlet-name>
+        <url-pattern>/funcionario</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
-            1
+            30
         </session-timeout>
     </session-config>
 </web-app>

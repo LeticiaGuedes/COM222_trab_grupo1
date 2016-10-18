@@ -2,14 +2,15 @@
 
     Document   : index
     Created on : 14/10/2016, 11:12:04
-    Author     : JoÃ£o
+    Author     : João
 
 
-    Aqui precisa ter um cÃ³digo que pegue
+    Aqui precisa ter um código que pegue
 
 --%>
 
-<%@page language='java' contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -18,6 +19,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <%@ include file='/WEB-INF/view/login_funcionario.jspf'%>
+        <%@include file="WEB-INF/view/login_funcionario.jspf" %>
     </body>
 </html>

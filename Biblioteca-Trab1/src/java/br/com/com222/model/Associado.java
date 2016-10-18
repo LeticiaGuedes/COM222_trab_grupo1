@@ -17,6 +17,19 @@ public class Associado {
     private String senha;
     private String status;
 
+    public Associado() {
+        
+    }
+    
+    public Associado(int codigo, String nome, String endereco, String email, String senha, String status) {
+        this.codigo = codigo;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.email = email;
+        this.senha = senha;
+        this.status = status;
+    }
+    
     public int getCodigo() {
         return codigo;
     }
