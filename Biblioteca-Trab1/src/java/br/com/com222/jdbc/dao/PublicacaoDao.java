@@ -1,12 +1,15 @@
 package br.com.com222.jdbc.dao;
 
 import br.com.com222.jdbc.ConnectionFactory;
+import br.com.com222.model.Exemplar;
 import br.com.com222.model.Publicacao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.ArrayList;
 
 public class PublicacaoDao {
     
@@ -37,6 +40,37 @@ public class PublicacaoDao {
             stmt.close();
         } catch(SQLException e) {
             throw new RuntimeException (e);
+        }
+    }
+    
+    public ArrayList<Exemplar> consulta(String busca){
+        
+        String sql = "SELECT * FROM `exemplar` JOIN `publicacao` on `exemplar`.`publicacao_ISBN` = `publicacao`.`ISBN` where `publicacao`.`ISBN` = '"+busca+"' OR `publicacao`.`titulo` = '"+busca+"'";
+        
+        try {
+            ArrayList<Exemplar> list = new ArrayList();
+            
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            
+            while (rs.next()) {
+                Exemplar exemplar = new Exemplar(rs.getInt("ISBN"), rs.getInt("numero"),
+                        rs.getFloat("preco"), rs.getInt("status"), rs.getString("titulo"),
+                        rs.getString("autor"), rs.getString("editora"), rs.getInt("ano"));
+                
+                list.add(exemplar);
+            }
+            
+            rs.close();
+            stmt.close();
+            
+            return list;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+            
         }
     }
 }
