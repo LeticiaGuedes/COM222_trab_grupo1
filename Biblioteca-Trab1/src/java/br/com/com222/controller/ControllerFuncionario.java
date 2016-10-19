@@ -6,13 +6,19 @@
 package br.com.com222.controller;
 
 import br.com.com222.jdbc.dao.AssociadoDao;
+import br.com.com222.jdbc.dao.EmprestimoDao;
 import br.com.com222.jdbc.dao.ExemplarDao;
 import br.com.com222.jdbc.dao.PublicacaoDao;
 import br.com.com222.model.Associado;
+import br.com.com222.model.Emprestimo;
 import br.com.com222.model.Exemplar;
 import br.com.com222.model.Funcionario;
 import br.com.com222.model.Publicacao;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+
+import java.util.Date;
 import java.util.List;
 
 import java.util.logging.Level;
@@ -218,9 +224,36 @@ public class ControllerFuncionario extends HttpServlet {
     }
 
     protected void cad_emprestimo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO: implementação do cadastro de emprestimo <Letícia>
+        
+        String msg;
+        
+        int isbn = Integer.parseInt(request.getParameter("isbn"));
+        int numero = Integer.parseInt(request.getParameter("exemplar"));
+        String dataText = request.getParameter("data");
+        Date emprestimo = null;
+        try {
+            emprestimo = new SimpleDateFormat("dd/MM/yyyy").parse(dataText);
+        } catch (ParseException ex) {
+            Logger.getLogger(ControllerFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        int associado = Integer.parseInt(request.getParameter("associado"));
+        
+        Exemplar exemp = new ExemplarDao().consulta(isbn, numero);
+        
+        if (exemp == null) {
+            msg = "Exemplar procurado não existe!";
+        } else {
+            Emprestimo emprest = new Emprestimo(0, emprestimo, null, associado, 1, exemp);
+            
+            msg = new EmprestimoDao().cadastroEmp(emprest);
+        }
+            
+        
+        
+        
 
-        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        request.setAttribute("resposta", msg);
         String url = "/WEB-INF/View/resposta.jsp";
 
         RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -228,7 +261,12 @@ public class ControllerFuncionario extends HttpServlet {
     }
 
     protected void cad_devolucao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO: implementação do cadastro de devolução <Letícia>
+        
+        String msg;
+        int isbn = Integer.parseInt(request.getParameter("isbn"));
+        int numero = Integer.parseInt(request.getParameter("exemplar"));
+        
+        msg = new EmprestimoDao().cadastroDev(isbn, numero);
 
         request.setAttribute("resposta", "Cadastro realizado com sucesso!");
         String url = "/WEB-INF/View/resposta.jsp";

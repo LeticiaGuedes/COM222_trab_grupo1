@@ -28,7 +28,7 @@ public class EmprestimoDao {
     
     public String cadastroEmp(Emprestimo emp){
                 
-        String sql = "INSERT INTO `emprestimo`(`id`, `dataRetirada`, `dataDevolucao`, `associado_codigo`, `exemplar_ISBN`, `exemplar_numero`, `status`) VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO `emprestimo`(`dataRetirada`, `dataDevolucao`, `associado_codigo`, `exemplar_ISBN`, `exemplar_numero`, `status`) VALUES (?,?,?,?,?,?)";
         
         try {
             if(this.verStatus(emp.getExemplar().getISBN(), emp.getExemplar().getNumero())==1){
@@ -47,14 +47,16 @@ public class EmprestimoDao {
 
                 PreparedStatement stmt = this.connection.prepareStatement(sql);
 
-                stmt.setInt(1, emp.getId());
-                stmt.setDate(2, (java.sql.Date) emp.getEmprestimo());
-                stmt.setDate(3, (java.sql.Date) dataDev);
-                stmt.setInt(4, emp.getCodigoAssoc());
-                stmt.setInt(5, emp.getExemplar().getISBN());
-                stmt.setInt(6, emp.getExemplar().getNumero());
-                stmt.setInt(7, emp.getStatus());
+                //stmt.setInt(1, emp.getId());
+                stmt.setDate(1, new java.sql.Date(emp.getEmprestimo().getTime()));
+                stmt.setDate(2, new java.sql.Date(dataDev.getTime()));
+                stmt.setInt(3, emp.getCodigoAssoc());
+                stmt.setInt(4, emp.getExemplar().getISBN());
+                stmt.setInt(5, emp.getExemplar().getNumero());
+                stmt.setInt(6, emp.getStatus());
 
+                new ExemplarDao().setStatus(1, emp.getExemplar().getISBN(), emp.getExemplar().getNumero());
+                
                 stmt.execute();
                 stmt.close();
                 
@@ -96,6 +98,8 @@ public class EmprestimoDao {
                 emp.setCodigoAssoc(codigoAssoc);
                 emp.setStatus(status);
                 emp.setExemplar(exemplar);
+            } else {
+                return "Exemplar informado não se encontra emprestado!";
             }
             
             rs.close();
@@ -109,9 +113,11 @@ public class EmprestimoDao {
         
         Date dataAt = new Date();
         
-        this.devStatus(emp.getId(), dataAt);
+        this.devStatus(emp.getId(), new java.sql.Date(dataAt.getTime()));
         
         Date dataDev = emp.getDevolucao();
+        new ExemplarDao().setStatus(0, emp.getExemplar().getISBN(), emp.getExemplar().getNumero());
+        
         if(dataAt.before(dataDev)){
             long diferenca = dataDev.getTime() - dataAt.getTime();
             int atraso = (int) ((diferenca /1000) / 60 / 60 /24); //resultado é diferença entre as datas em dias
