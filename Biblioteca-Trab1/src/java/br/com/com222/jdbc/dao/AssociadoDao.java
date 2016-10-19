@@ -9,6 +9,7 @@ import br.com.com222.jdbc.ConnectionFactory;
 import br.com.com222.model.Associado;
 import br.com.com222.model.Emprestimo;
 import br.com.com222.model.Exemplar;
+import br.com.com222.model.Publicacao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -155,30 +156,46 @@ public class AssociadoDao {
         }
     }
     
-    public String geraRelatorio(){
-        String result = "";
+    public List<Associado> geraRelatorio(){
+        List<Associado> list = new ArrayList<>();
         Date dataAt = new Date();
         
-        String sql = "SELECT * FROM `associado` JOIN emprestimo ON associado.codigo = emprestimo.associado_codigo WHERE emprestimo.dataDevolucao < "+(java.sql.Date)dataAt;
+        String sql = "SELECT associado.`codigo`, associado.`nome`, associado.`endereco`, associado.`email`, associado.`senha`, associado.`status` FROM `associado` JOIN emprestimo WHERE emprestimo.dataDevolucao > "+(java.sql.Date)dataAt+" AND emprestimo.status = 1";
         
         try{
             PreparedStatement stmt = this.connection.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             
-            if(rs.next()){
-                result += "<b>Código: </b>"+rs.getInt("codigo")+"</br>";
-                result += "<b>Nome: </b>"+rs.getString("nome")+"</br>";
+            while (rs.next()){
+                int result = 0;
+                for (Associado assoc: list) {
+                    if(assoc.getCodigo() == rs.getInt("codigo")){
+                        result = 1;
+                    }
+                }
+
+                if(result == 0){
+                Associado associado = new Associado();
+                associado.setCodigo(rs.getInt("codigo"));
+                associado.setNome(rs.getString("nome"));
+                associado.setEndereco(rs.getString("endereco"));
+                associado.setEmail(rs.getString("email"));
+                associado.setSenha(rs.getString("senha"));
+                associado.setStatus(rs.getString("status"));
                 
-                
+                EmprestimoDao empDao = new EmprestimoDao();
+                List<Emprestimo> lisEmp = empDao.consultaEmpAt(rs.getInt("codigo"), dataAt);
+                associado.setListaEmp(lisEmp);
+                }
             }
             
             rs.close();
             stmt.close();
+        
+            return list;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        
-        return result;
     }
 
 }

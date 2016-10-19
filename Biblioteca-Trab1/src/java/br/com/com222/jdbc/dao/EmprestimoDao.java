@@ -11,6 +11,8 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmprestimoDao {
     
@@ -151,6 +153,70 @@ public class EmprestimoDao {
             
             stmt.execute();
             stmt.close();
+        } catch(SQLException e) {
+            throw new RuntimeException (e);
+        }
+    }
+    
+    public List<Emprestimo> consultaEmpAt(int codAssoc, Date dataAt){
+        List<Emprestimo> list = new ArrayList<>();
+        String sql = "SELECT * FROM `emprestimo` WHERE `associado_codigo` = "+codAssoc+" AND emprestimo.dataDevolucao > "+(java.sql.Date)dataAt+" AND emprestimo.status = 1";
+        
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Emprestimo emp = new Emprestimo();
+                emp.setId(rs.getInt("id"));
+                emp.setEmprestimo(rs.getDate("dataRetirada"));
+                emp.setDevolucao(rs.getDate("dataDevolucao"));
+                emp.setCodigoAssoc(rs.getInt("associado_codigo"));
+                emp.setStatus(rs.getInt("status"));
+                
+                ExemplarDao exempDao = new ExemplarDao();
+                Exemplar exemp = exempDao.consulta(rs.getInt("exemplar_ISBN"), rs.getInt("exemplar_numero"));
+                emp.setExemplar(exemp);
+                
+                list.add(emp);
+            }
+            
+            rs.close();
+            stmt.close();
+        
+            return list;
+        } catch(SQLException e) {
+            throw new RuntimeException (e);
+        }
+    }
+    
+    public List<Emprestimo> gerarHist(int codAssoc){
+        List<Emprestimo> list = new ArrayList<>();
+        String sql = "SELECT * FROM `emprestimo` WHERE `associado_codigo` = "+codAssoc;
+        
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            while(rs.next()){
+                Emprestimo emp = new Emprestimo();
+                emp.setId(rs.getInt("id"));
+                emp.setEmprestimo(rs.getDate("dataRetirada"));
+                emp.setDevolucao(rs.getDate("dataDevolucao"));
+                emp.setCodigoAssoc(rs.getInt("associado_codigo"));
+                emp.setStatus(rs.getInt("status"));
+                
+                ExemplarDao exempDao = new ExemplarDao();
+                Exemplar exemp = exempDao.consulta(rs.getInt("exemplar_ISBN"), rs.getInt("exemplar_numero"));
+                emp.setExemplar(exemp);
+                
+                list.add(emp);
+            }
+            
+            rs.close();
+            stmt.close();
+        
+            return list;
         } catch(SQLException e) {
             throw new RuntimeException (e);
         }

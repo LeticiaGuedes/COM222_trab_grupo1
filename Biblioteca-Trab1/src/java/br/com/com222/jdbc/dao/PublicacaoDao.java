@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.ArrayList;
+import java.util.List;
 
 public class PublicacaoDao {
 
@@ -74,12 +75,12 @@ public class PublicacaoDao {
         }
     }
 
-    public ArrayList<Exemplar> consulta(String busca) {
+    public List<Exemplar> consulta(String busca) {
 
         String sql = "SELECT * FROM `exemplar` JOIN `publicacao` on `exemplar`.`publicacao_ISBN` = `publicacao`.`ISBN` where `publicacao`.`ISBN` = '" + busca + "' OR `publicacao`.`titulo` Like '" + busca + "%'";
 
         try {
-            ArrayList<Exemplar> list = new ArrayList();
+            List<Exemplar> list = new ArrayList();
 
             PreparedStatement stmt = this.connection.prepareStatement(sql);
 
