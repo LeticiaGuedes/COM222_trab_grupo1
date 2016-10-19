@@ -109,5 +109,41 @@ public class AssociadoDao {
             throw new RuntimeException(e);
         }
     }
+    
+    public int consultaPrazo(int codigo){
+        
+        String sql = "SELECT `status` FROM `associado` WHERE `codigo` = "+codigo;
+        
+        try {
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+            
+            int result = 0;
+            
+            if (rs.next()) {
+                switch(rs.getString("status")){
+                    case "grad":
+                        result = 7;
+                        break;
+                    case "posgrad":
+                        result = 10;
+                        break;
+                    case "prof":
+                        result = 14;
+                }
+            }
+            
+            rs.close();
+            stmt.close();
+            
+            return result;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+            
+        }
+    }
 
 }
