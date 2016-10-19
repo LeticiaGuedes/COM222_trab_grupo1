@@ -55,4 +55,38 @@ public class ExemplarDao {
             throw new RuntimeException(e);
         }
     }
+    
+    public Exemplar consulta(int ISBN, int numExemplar) {
+
+        String sql = "SELECT * FROM `exemplar` JOIN `publicacao` on `exemplar`.`publicacao_ISBN` = `publicacao`.`ISBN` where exemplar.publicacao_ISBN = "+ISBN+" AND exemplar.numero = "+numExemplar;
+
+        try {
+            Exemplar exemplar = new Exemplar();
+            
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                exemplar.setISBN(rs.getInt("ISBN"));
+                exemplar.setNumero(rs.getInt("numero"));
+                exemplar.setPreco(rs.getFloat("preco"));
+                exemplar.setStatus(rs.getInt("status"));
+                exemplar.setTitulo(rs.getString("titulo"));
+                exemplar.setAutor(rs.getString("autor"));
+                exemplar.setEditora(rs.getString("editora"));
+                exemplar.setAno(rs.getInt("ano"));
+            }
+
+            rs.close();
+            stmt.close();
+
+            return exemplar;
+
+        } catch (SQLException e) {
+
+            throw new RuntimeException(e);
+
+        }
+    }
 }

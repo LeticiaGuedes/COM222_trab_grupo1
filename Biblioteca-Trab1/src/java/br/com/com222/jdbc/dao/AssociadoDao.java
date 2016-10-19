@@ -154,5 +154,31 @@ public class AssociadoDao {
             
         }
     }
+    
+    public String geraRelatorio(){
+        String result = "";
+        Date dataAt = new Date();
+        
+        String sql = "SELECT * FROM `associado` JOIN emprestimo ON associado.codigo = emprestimo.associado_codigo WHERE emprestimo.dataDevolucao < "+(java.sql.Date)dataAt;
+        
+        try{
+            PreparedStatement stmt = this.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            
+            if(rs.next()){
+                result += "<b>Código: </b>"+rs.getInt("codigo")+"</br>";
+                result += "<b>Nome: </b>"+rs.getString("nome")+"</br>";
+                
+                
+            }
+            
+            rs.close();
+            stmt.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        
+        return result;
+    }
 
 }
