@@ -24,8 +24,6 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author wallace
  */
-
-@WebServlet(name = "ControllerFuncionario", loadOnStartup = 1, urlPatterns = {"/cad_associado", "/cad_publicacao", "/cad_exemplar", "/ver_publicacao", "/cad_emprestimo", "/cad_devolucao", "/rel_atraso"})
 public class ControllerFuncionario extends HttpServlet {
 
     /**
@@ -40,45 +38,45 @@ public class ControllerFuncionario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
 
-        Funcionario fc = (Funcionario) request.getSession().getAttribute("funcionario");
+        Funcionario fc = (Funcionario) request.getSession().getAttribute("userFuncionario");
+        String userPath = request.getServletPath();
 
         //verifica login
         if (fc == null) {
             response.sendRedirect("");
         }
 
-        String userPath = request.getServletPath();
         String acao = request.getParameter("acao");
 
         if (acao == null) {
 
-            String url = "/WEB-INF/View/"+userPath+".jsp";
-            
+            String url = "/WEB-INF/View/" + userPath + ".jsp";
+
             RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
-            
+
         } else {
             switch (userPath) {
                 case "/cad_associado":
-                    
+                    cad_associado(request, response);
                     break;
                 case "/cad_publicacao":
-                        
+
                     break;
                 case "/cad_exemplar":
-                    
+
                     break;
                 case "/ver_publicacao":
-                    
+
                     break;
                 case "/cad_emprestimo":
-                    
+
                     break;
                 case "/cad_devolucao":
-                    
+
                     break;
                 case "/rel_atraso":
-                    
+
                     break;
             }
         }
@@ -146,7 +144,9 @@ public class ControllerFuncionario extends HttpServlet {
         AssociadoDao ad = new AssociadoDao();
         ad.cadastro(assoc);
 
-        RequestDispatcher rd = request.getRequestDispatcher("/ok.jsp");
+        String url = "/WEB-INF/View/confirmacao.jsp";
+
+        RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
     }
 }

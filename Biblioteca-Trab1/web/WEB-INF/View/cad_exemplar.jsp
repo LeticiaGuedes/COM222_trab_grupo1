@@ -15,7 +15,7 @@
                 <h1 class="page-title">
                     Cadastrar Exemplar
                 </h1>
-                <form action="" method="post">
+                <form action="cad_exemplar" method="post">
 
                     <div class="form-group">
                         <label>Número</label>

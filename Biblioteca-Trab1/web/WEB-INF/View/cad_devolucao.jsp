@@ -15,7 +15,7 @@
                 <h1 class="page-title">
                     Realizar Devolu&ccedil;&atilde;o
                 </h1>
-                <form action="" method="post">
+                <form action="cad_devolucao" method="post">
 
                     <div class="form-group">
                         <label>N&uacute;mero de Exemplar</label>

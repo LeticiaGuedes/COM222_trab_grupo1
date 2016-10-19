@@ -21,7 +21,7 @@
                 <h1 class="page-title">
                     Realizar Empréstimo
                 </h1>
-                <form action="" method="post">
+                <form action="cad_emprestimo" method="post">
 
                     <div class="form-group">
                         <label>Número de Exemplar</label>

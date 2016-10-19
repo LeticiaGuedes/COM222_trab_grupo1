@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
         String url = null;
         
 
-        if (userPath.equals("/funcionario")) {
+        if (userPath.equals("/loginFuncionario")) {
 
             FuncionarioDao fd = new FuncionarioDao();
             Funcionario funcionario = fd.login(codigo, pass);
@@ -56,13 +56,13 @@ public class Login extends HttpServlet {
                 sessao.setAttribute("userFuncionario", funcionario);
                 
 
-                url = "/WEB-INF/View/index_funcionario.jsp";
+                url = "index_funcionario";
 
             } else {
                 url = "/login_funcionario.jsp";
             }
 
-        } else if (userPath.equals("/associado")) {
+        } else if (userPath.equals("/loginAssociado")) {
             AssociadoDao ad = new AssociadoDao();
             Associado associado = ad.login(codigo, pass);
             if (associado != null) {
@@ -71,7 +71,7 @@ public class Login extends HttpServlet {
                 HttpSession sessao = request.getSession();
                 sessao.setAttribute("userAssociado", associado);
                 
-                url = "/WEB-INF/View/index_associado.jsp";
+                url = "index_associado";
 
             } else {
                 url = "/login.jsp";
@@ -79,7 +79,7 @@ public class Login extends HttpServlet {
         }
         
         try {
-            request.getRequestDispatcher(url).forward(request, response);
+            response.sendRedirect(url);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

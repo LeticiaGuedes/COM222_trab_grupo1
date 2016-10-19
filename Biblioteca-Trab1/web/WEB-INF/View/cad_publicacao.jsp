@@ -15,7 +15,7 @@
                 <h1 class="page-title">
                     Cadastrar Publicação
                 </h1>
-                <form action="" method="post">
+                <form action="cad_publicacao" method="post">
 
                     <div class="form-group">
                         <label>ISBN</label>

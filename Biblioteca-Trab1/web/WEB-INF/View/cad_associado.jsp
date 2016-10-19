@@ -15,8 +15,14 @@
                 <h1 class="page-title">
                     Cadastrar Associado
                 </h1>
-                <form action="" method="post">
-
+                <form action="cad_associado" method="post">
+                    <input name="acao" value="true" hidden="true"></input>
+                    
+                    <div class="form-group">
+                        <label>Codigo</label>
+                        <input name="codigo" required class="form-control" type="text">
+                    </div>
+                    
                     <div class="form-group">
                         <label>Nome</label>
                         <input name="nome" required class="form-control" type="text">
@@ -35,9 +41,9 @@
                     <div class="form-group">
                         <label>Status</label>
                         <select name="status" required class="form-control">
-                            <option value="7">Grad (aluno de gradua&ccedil;&atilde;o): 7 dias</option>
-                            <option value="10">Posgrad (aluno de p&oacute;s-gradua&ccedil;&atilde;o): 10 dias</option>
-                            <option value="14">Prof (professor): 14 dias</option>
+                            <option value="grad">Grad (aluno de gradua&ccedil;&atilde;o): 7 dias</option>
+                            <option value="posgrad">Posgrad (aluno de p&oacute;s-gradua&ccedil;&atilde;o): 10 dias</option>
+                            <option value="prof">Prof (professor): 14 dias</option>
                         </select>
                     </div>
 

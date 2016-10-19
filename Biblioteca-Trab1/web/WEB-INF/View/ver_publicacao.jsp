@@ -16,7 +16,7 @@
                     Consultar Publicação
                 </h1>
 
-                <form action="" method="post">
+                <form action="ver_publicacao" method="post">
                     <div class="form-group form-inline">
                         <label>ISBN ou Título:</label>
                         <input name="query" required class="form-control" type="text">

@@ -5,28 +5,25 @@
         <servlet-class>br.com.com222.filter.Login</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>teste</servlet-name>
-        <servlet-class>br.com.com222.controller.teste</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>ControllerFuncionario</servlet-name>
         <servlet-class>br.com.com222.controller.ControllerFuncionario</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
-        <url-pattern>/funcionario</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Login</servlet-name>
-        <url-pattern>/associado</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>teste</servlet-name>
-        <url-pattern>/teste</url-pattern>
+        <url-pattern>/loginFuncionario</url-pattern>
+        <url-pattern>/loginAssociado</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ControllerFuncionario</servlet-name>
-        <url-pattern>/funcionarioController</url-pattern>
+        <url-pattern>/index_funcionario</url-pattern>
+        <url-pattern>/cad_emprestimo</url-pattern>
+        <url-pattern>/cad_associado</url-pattern>
+        <url-pattern>/sair</url-pattern>
+        <url-pattern>/cad_devolucao</url-pattern>
+        <url-pattern>/ver_publicacao</url-pattern>
+        <url-pattern>/cad_publicacao</url-pattern>
+        <url-pattern>/cad_exemplar</url-pattern>
+        <url-pattern>/rel_atraso</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
