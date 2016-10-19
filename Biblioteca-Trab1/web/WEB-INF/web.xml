@@ -18,8 +18,16 @@
         <url-pattern>/loginAssociado</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ControllerAssociado</servlet-name>
+        <url-pattern>/index_associado</url-pattern>
+        <url-pattern>/consulta_pub</url-pattern>
+        <url-pattern>/associado_sair</url-pattern>
+        <url-pattern>/rel_historico</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ControllerFuncionario</servlet-name>
         <url-pattern>/index_funcionario</url-pattern>
+        <url-pattern>/funcionario_sair</url-pattern>
         <url-pattern>/cad_emprestimo</url-pattern>
         <url-pattern>/cad_associado</url-pattern>
         <url-pattern>/sair</url-pattern>
@@ -28,12 +36,6 @@
         <url-pattern>/cad_publicacao</url-pattern>
         <url-pattern>/cad_exemplar</url-pattern>
         <url-pattern>/rel_atraso</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ControllerAssociado</servlet-name>
-        <url-pattern>/index_associado</url-pattern>
-        <url-pattern>/consulta_pub</url-pattern>
-        <url-pattern>/rel_historico</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -91,7 +91,7 @@ public class AssociadoDao {
 
     }
 
-    public void cadastro(Associado assoc) {
+    public String cadastro(Associado assoc) {
 
         String sql = "INSERT INTO associado (codigo, nome, endereco, email, senha, status) VALUES (?, ?, ?, ?, ?, ?)";
 
@@ -107,8 +107,15 @@ public class AssociadoDao {
 
             stmt.execute();
             stmt.close();
+            
+            return "Cadastro realizado com sucesso";
+            
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if (e.getSQLState().equals("23000")) {
+                return "O Código do Associado que você está tentando adicionar já está cadastrado";
+            } else {
+                throw new RuntimeException(e.getSQLState());
+            }
         }
     }
     

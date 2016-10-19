@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page contentType="text/html; charset=ISO-8859-1" language="java" pageEncoding="UTF-8" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html>
 <html>
@@ -33,7 +34,7 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <!-- A parte de baixo só existe após pesquisar -->
                 <div class="form-group">
-                    <h3>Resultados da Busca ()</h3>
+                    <h3>Resultados da Busca (${fn:length(lista)})</h3>
                     <hr>
                 </div>
 

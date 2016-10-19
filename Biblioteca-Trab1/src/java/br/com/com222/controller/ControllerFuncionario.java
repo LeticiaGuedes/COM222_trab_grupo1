@@ -149,9 +149,9 @@ public class ControllerFuncionario extends HttpServlet {
         Associado assoc = new Associado(cod, nome, endereco, email, senha, status, null);
 
         AssociadoDao ad = new AssociadoDao();
-        ad.cadastro(assoc);
+        String msg = ad.cadastro(assoc);
 
-        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        request.setAttribute("resposta", msg);
         String url = "/WEB-INF/View/resposta.jsp";
 
         RequestDispatcher rd = request.getRequestDispatcher(url);
@@ -159,7 +159,7 @@ public class ControllerFuncionario extends HttpServlet {
     }
 
     protected void cad_publicacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        
         int isbn = Integer.parseInt(request.getParameter("isbn"));
         String titulo = request.getParameter("titulo");
         String autor = request.getParameter("autor");
@@ -169,9 +169,9 @@ public class ControllerFuncionario extends HttpServlet {
         Publicacao pub = new Publicacao(isbn, titulo, autor, editora, ano);
 
         PublicacaoDao pd = new PublicacaoDao();
-        pd.cadastro(pub);
+        String msg = pd.cadastro(pub);
 
-        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        request.setAttribute("resposta", msg);
         String url = "/WEB-INF/View/resposta.jsp";
 
         RequestDispatcher rd = request.getRequestDispatcher(url);

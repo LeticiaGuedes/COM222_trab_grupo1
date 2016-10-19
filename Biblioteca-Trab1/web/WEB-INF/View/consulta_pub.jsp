@@ -33,7 +33,7 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <!-- A parte de baixo só existe após pesquisar -->
                 <div class="form-group">
-                    <h3>Resultados da Busca (2)</h3>
+                    <h3>Resultados da Busca (${fn:length(lista)})</h3>
                     <hr>
                 </div>
 

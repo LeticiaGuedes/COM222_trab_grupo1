@@ -23,7 +23,7 @@ public class PublicacaoDao {
         }
     }
 
-    public void cadastro(Publicacao pub) {
+    public String cadastro(Publicacao pub) {
 
         String sql = "INSERT INTO `publicacao`(`ISBN`, `titulo`, `autor`, `editora`, `ano`) VALUES (?,?,?,?,?)";
 
@@ -38,8 +38,15 @@ public class PublicacaoDao {
 
             stmt.execute();
             stmt.close();
+            
+            return "Cadastro realizado com sucesso";
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            if (e.getSQLState().equals("23000")) {
+                return "O Código ISBN que você está tentando adicionar já está cadastrado";
+            } else {
+                throw new RuntimeException(e.getSQLState());
+            }
+            
         }
     }
 

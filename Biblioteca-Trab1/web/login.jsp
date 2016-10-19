@@ -35,7 +35,7 @@
 
                     <div class="form-group">
                         <label>Senha</label>
-                        <input name="senha" required class="form-control" type="text">
+                        <input name="senha" required class="form-control" type="password">
                     </div>
 
                     <div class="form-group">
