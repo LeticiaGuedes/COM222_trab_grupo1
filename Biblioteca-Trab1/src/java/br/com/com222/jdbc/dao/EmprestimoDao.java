@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.ResultSet;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class EmprestimoDao {
         }
     }
     
-    public String cadastroDev(int ISBN, int numExemplar){
+    public String cadastroDev(int ISBN, int numExemplar) {
         
         String sql = "SELECT * FROM `emprestimo` WHERE `exemplar_ISBN` = "+ISBN+" AND `exemplar_numero` = "+numExemplar+" AND `status` = 1";
         
@@ -83,6 +84,7 @@ public class EmprestimoDao {
             ResultSet rs = stmt.executeQuery();
             
             if (rs.next()) {
+                //Monta bean emprestimo
                 int id = rs.getInt("id");
                 Date emprestimo = rs.getDate("dataRetirada");
                 Date devolucao = rs.getDate("dataDevolucao");
@@ -111,16 +113,21 @@ public class EmprestimoDao {
             
         }
         
+        //capta data atual e faz parse de util.Date para sql.Date
         Date dataAt = new Date();
+
+        java.sql.Date dataDB = new java.sql.Date(dataAt.getTime());
         
-        this.devStatus(emp.getId(), new java.sql.Date(dataAt.getTime()));
+        //atualiza data e status da tabela emprestimo
+        this.devStatus(emp.getId(), dataDB );
         
         Date dataDev = emp.getDevolucao();
         new ExemplarDao().setStatus(0, emp.getExemplar().getISBN(), emp.getExemplar().getNumero());
         
-        if(dataAt.before(dataDev)){
-            long diferenca = dataDev.getTime() - dataAt.getTime();
-            int atraso = (int) ((diferenca /1000) / 60 / 60 /24); //resultado é diferença entre as datas em dias
+        
+        if(dataAt.after(dataDev)){
+            long diferenca = dataAt.getTime() - dataDev.getTime();
+            int atraso = Math.round((diferenca /1000) / 60 / 60 /24); //resultado é diferença entre as datas em dias
             return "A devolução está com "+atraso+" dias de atraso, portanto deverá ser paga uma multa de R$"+atraso+",00";
         }else{
             return "Devolução dentro do prazo.";
@@ -152,8 +159,8 @@ public class EmprestimoDao {
         }
     }
     
-    public void devStatus(int id, Date dataAt){
-        String sql = "UPDATE `emprestimo` SET `status`= 0 AND `dataDevolucao` = "+(java.sql.Date)dataAt+" WHERE `id` = "+id;
+    public void devStatus(int id, java.sql.Date dataAt){
+        String sql = "UPDATE `emprestimo` SET `status`= 0 AND `dataDevolucao` = "+dataAt+" WHERE `id` = "+id;
         
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -165,9 +172,9 @@ public class EmprestimoDao {
         }
     }
     
-    public List<Emprestimo> consultaEmpAt(int codAssoc, Date dataAt){
+    public List<Emprestimo> consultaEmpAt(int codAssoc, java.sql.Date dataAt){
         List<Emprestimo> list = new ArrayList<>();
-        String sql = "SELECT * FROM `emprestimo` WHERE `associado_codigo` = "+codAssoc+" AND emprestimo.dataDevolucao > "+(java.sql.Date)dataAt+" AND emprestimo.status = 1";
+        String sql = "SELECT * FROM `emprestimo` WHERE `associado_codigo` = "+codAssoc+" AND emprestimo.dataDevolucao > '"+dataAt+"' AND emprestimo.status = 1";
         
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);

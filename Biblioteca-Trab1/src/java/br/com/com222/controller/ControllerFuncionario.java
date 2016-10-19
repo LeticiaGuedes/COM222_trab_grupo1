@@ -234,7 +234,7 @@ public class ControllerFuncionario extends HttpServlet {
         try {
             emprestimo = new SimpleDateFormat("dd/MM/yyyy").parse(dataText);
         } catch (ParseException ex) {
-            Logger.getLogger(ControllerFuncionario.class.getName()).log(Level.SEVERE, null, ex);
+            throw new RuntimeException(ex);
         }
         
         int associado = Integer.parseInt(request.getParameter("associado"));
@@ -268,7 +268,7 @@ public class ControllerFuncionario extends HttpServlet {
         
         msg = new EmprestimoDao().cadastroDev(isbn, numero);
 
-        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        request.setAttribute("resposta", msg);
         String url = "/WEB-INF/View/resposta.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
@@ -288,7 +288,12 @@ public class ControllerFuncionario extends HttpServlet {
     }
 
     protected void rel_atraso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        //TODO: implementação relatório de devolução atrasada
+        
+        AssociadoDao ad = new AssociadoDao();
+        
+        List<Associado> lista = ad.geraRelatorio();
+        
+        request.setAttribute("listaAtraso", lista);
         
         String url = "/WEB-INF/View/rel_atraso.jsp";
         RequestDispatcher rd = request.getRequestDispatcher(url);

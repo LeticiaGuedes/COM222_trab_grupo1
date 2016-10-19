@@ -9,14 +9,21 @@ and open the template in the editor.
         <style>
             body {margin:0;}
 
+             .menu_topo{
+                position: fixed;
+                z-index:9999;
+                top: 0;
+                left:0;
+                right:0;
+            }
+
             ul {
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
                 background-color: #333;
-                position: fixed;
-                top: 0;
+                
                 width: 100%;
             }
 
@@ -57,7 +64,7 @@ and open the template in the editor.
         </style>
     </head>
     <body>
-        <div>
+        <div class="menu_topo">
             <ul>
                 <li><h2><a href="index_associado">Biblioteca</a></h2></li>
                 <li><a href="consulta_pub">Consultar Publica&ccedil;&atilde;o</a></li>

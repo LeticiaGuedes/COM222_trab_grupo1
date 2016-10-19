@@ -156,11 +156,12 @@ public class AssociadoDao {
         }
     }
     
-    public List<Associado> geraRelatorio(){
+    public List<Associado> geraRelatorio() {
+        
         List<Associado> list = new ArrayList<>();
         Date dataAt = new Date();
-        
-        String sql = "SELECT associado.`codigo`, associado.`nome`, associado.`endereco`, associado.`email`, associado.`senha`, associado.`status` FROM `associado` JOIN emprestimo WHERE emprestimo.dataDevolucao > "+(java.sql.Date)dataAt+" AND emprestimo.status = 1";
+        java.sql.Date dataAtual = new java.sql.Date(dataAt.getTime());
+        String sql = "SELECT associado.* FROM `associado` JOIN emprestimo ON associado.codigo = emprestimo.associado_codigo WHERE emprestimo.dataDevolucao < '"+dataAtual+"' AND emprestimo.status = 1";
         
         try{
             PreparedStatement stmt = this.connection.prepareStatement(sql);
@@ -184,8 +185,9 @@ public class AssociadoDao {
                 associado.setStatus(rs.getString("status"));
                 
                 EmprestimoDao empDao = new EmprestimoDao();
-                List<Emprestimo> lisEmp = empDao.consultaEmpAt(rs.getInt("codigo"), dataAt);
+                List<Emprestimo> lisEmp = empDao.consultaEmpAt(rs.getInt("codigo"), dataAtual);
                 associado.setListaEmp(lisEmp);
+                list.add(associado);
                 }
             }
             
