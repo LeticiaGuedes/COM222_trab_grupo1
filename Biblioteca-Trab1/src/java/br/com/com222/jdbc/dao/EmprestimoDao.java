@@ -107,10 +107,11 @@ public class EmprestimoDao {
             
         }
         
-        this.devStatus(emp.getId());
+        Date dataAt = new Date();
+        
+        this.devStatus(emp.getId(), dataAt);
         
         Date dataDev = emp.getDevolucao();
-        Date dataAt = new Date();
         if(dataAt.before(dataDev)){
             long diferenca = dataDev.getTime() - dataAt.getTime();
             int atraso = (int) ((diferenca /1000) / 60 / 60 /24); //resultado é diferença entre as datas em dias
@@ -145,8 +146,8 @@ public class EmprestimoDao {
         }
     }
     
-    public void devStatus(int id){
-        String sql = "UPDATE `emprestimo` SET `status`= 0 WHERE `id` = "+id;
+    public void devStatus(int id, Date dataAt){
+        String sql = "UPDATE `emprestimo` SET `status`= 0 AND `dataDevolucao` = "+(java.sql.Date)dataAt+" WHERE `id` = "+id;
         
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
