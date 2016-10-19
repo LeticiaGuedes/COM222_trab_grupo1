@@ -82,4 +82,13 @@ public class Associado {
     public void setStatus(String status) {
         this.status = status;
     }
+    
+    public List<Emprestimo> getListaEmp() {
+        return listaEmp;
+    }
+
+    public void setListaEmp(List<Emprestimo> listaEmp) {
+        this.listaEmp = listaEmp;
+    }
+    
 }

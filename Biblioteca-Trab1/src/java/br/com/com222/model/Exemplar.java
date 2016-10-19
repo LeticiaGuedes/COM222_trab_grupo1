@@ -20,6 +20,13 @@ public class Exemplar extends Publicacao{
         super();
     }
     
+    public Exemplar(int numero, float preco, int status, Publicacao pub) {
+        super(pub.getISBN(), pub.getTitulo(), pub.getAutor(), pub.getEditora(), pub.getAno());
+        this.numero = numero;
+        this.preco = preco;
+        this.status = status;
+    }
+    
     public Exemplar(int ISBN, int numero, float preco, int status, String titulo, String autor, String editora, int ano) {
         super(ISBN, titulo, autor, editora, ano);
         this.numero = numero;

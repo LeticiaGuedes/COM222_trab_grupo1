@@ -23,6 +23,8 @@
                 </h1>
                 <form action="cad_emprestimo" method="post">
 
+                    <input name="acao" value="true" hidden="true"></input>
+                    
                     <div class="form-group">
                         <label>Número de Exemplar</label>
                         <input name="exemplar" required class="form-control" type="text">

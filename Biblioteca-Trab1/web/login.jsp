@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -13,8 +14,18 @@
         <div class="container">
             <div class="col-sm-6 col-sm-offset-3">
                  <h1 class="page-title">
-                    Entrar
+                    Login Associado
                 </h1>
+                
+                <h4>
+                    <c:if test="${!param.login}">
+                        Entrar
+                    </c:if>
+                    <c:if test="${param.login == 'falha'}">
+                        Código ou senha invalidos. Tente novamente.
+                    </c:if>
+                </h4>
+                </br>
                 <form action="loginAssociado" method="post">
 
                     <div class="form-group">

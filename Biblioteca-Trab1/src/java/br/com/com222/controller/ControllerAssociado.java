@@ -3,27 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.com222.filter;
+package br.com.com222.controller;
 
-import br.com.com222.jdbc.dao.AssociadoDao;
-import br.com.com222.jdbc.dao.FuncionarioDao;
+import br.com.com222.jdbc.dao.PublicacaoDao;
 import br.com.com222.model.Associado;
-import br.com.com222.model.Funcionario;
+import br.com.com222.model.Exemplar;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author wallace
  */
-@WebServlet(name = "Login", loadOnStartup = 1, urlPatterns = {"/funcionario", "/associado"})
-
-public class Login extends HttpServlet {
+public class ControllerAssociado extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,53 +35,35 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int codigo = Integer.parseInt(request.getParameter("codigo"));
-        String pass = request.getParameter("senha");
+        Associado as = (Associado) request.getSession().getAttribute("userAssociado");
         String userPath = request.getServletPath();
-        String url = null;
-        
 
-        if (userPath.equals("/loginFuncionario")) {
-
-            FuncionarioDao fd = new FuncionarioDao();
-            Funcionario funcionario = fd.login(codigo, pass);
-
-            if (funcionario != null) {
-
-                //cria uma nova sesssão
-                request.getSession().invalidate();
-                HttpSession sessao = request.getSession();
-                sessao.setAttribute("userFuncionario", funcionario);
-                
-
-                url = "index_funcionario";
-
-            } else {
-                url = "login_funcionario.jsp?login=falha";
-            }
-
-        } else if (userPath.equals("/loginAssociado")) {
-            AssociadoDao ad = new AssociadoDao();
-            Associado associado = ad.login(codigo, pass);
-            if (associado != null) {
-                //cria nova sessão
-                request.getSession().invalidate();
-                HttpSession sessao = request.getSession();
-                sessao.setAttribute("userAssociado", associado);
-                
-                url = "index_associado";
-
-            } else {
-                url = "login.jsp?login=falha";
-            }
+        if (as == null) {
+            response.sendRedirect("");
         }
-        
-        try {
-            response.sendRedirect(url);
-        } catch (Exception ex) {
-            ex.printStackTrace();
+
+        String acao = request.getParameter("acao");
+        String url;
+
+        if (acao == null) {
+
+            url = "/WEB-INF/View/" + userPath + ".jsp";
+
+        } else {
+
+            String query = request.getParameter("query");
+            PublicacaoDao pd = new PublicacaoDao();
+            List<Exemplar> listaExemp = pd.consulta(query);
+
+            request.setAttribute("lista", listaExemp);
+
+            url = "/WEB-INF/View/consulta_pub.jsp";
+
         }
-        
+
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

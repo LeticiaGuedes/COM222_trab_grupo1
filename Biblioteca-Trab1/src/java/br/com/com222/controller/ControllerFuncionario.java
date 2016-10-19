@@ -6,16 +6,20 @@
 package br.com.com222.controller;
 
 import br.com.com222.jdbc.dao.AssociadoDao;
+import br.com.com222.jdbc.dao.ExemplarDao;
+import br.com.com222.jdbc.dao.PublicacaoDao;
 import br.com.com222.model.Associado;
+import br.com.com222.model.Exemplar;
 import br.com.com222.model.Funcionario;
+import br.com.com222.model.Publicacao;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.List;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
+
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,6 +42,8 @@ public class ControllerFuncionario extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException {
 
+        
+        
         Funcionario fc = (Funcionario) request.getSession().getAttribute("userFuncionario");
         String userPath = request.getServletPath();
 
@@ -61,22 +67,22 @@ public class ControllerFuncionario extends HttpServlet {
                     cad_associado(request, response);
                     break;
                 case "/cad_publicacao":
-
+                    cad_publicacao(request, response);
                     break;
                 case "/cad_exemplar":
-
+                    cad_exemplar(request, response);
                     break;
                 case "/ver_publicacao":
-
+                    ver_publicacao(request, response);
                     break;
                 case "/cad_emprestimo":
-
+                    cad_emprestimo(request, response);
                     break;
                 case "/cad_devolucao":
-
+                    cad_devolucao(request, response);
                     break;
                 case "/rel_atraso":
-
+                    rel_atraso(request, response);
                     break;
             }
         }
@@ -130,6 +136,7 @@ public class ControllerFuncionario extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    //<editor-fold>  Métodos de controle
     protected void cad_associado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         int cod = Integer.parseInt(request.getParameter("codigo"));
@@ -144,9 +151,110 @@ public class ControllerFuncionario extends HttpServlet {
         AssociadoDao ad = new AssociadoDao();
         ad.cadastro(assoc);
 
-        String url = "/WEB-INF/View/confirmacao.jsp";
+        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        String url = "/WEB-INF/View/resposta.jsp";
 
         RequestDispatcher rd = request.getRequestDispatcher(url);
         rd.forward(request, response);
     }
+
+    protected void cad_publicacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int isbn = Integer.parseInt(request.getParameter("isbn"));
+        String titulo = request.getParameter("titulo");
+        String autor = request.getParameter("autor");
+        String editora = request.getParameter("editora");
+        int ano = Integer.parseInt(request.getParameter("ano"));
+
+        Publicacao pub = new Publicacao(isbn, titulo, autor, editora, ano);
+
+        PublicacaoDao pd = new PublicacaoDao();
+        pd.cadastro(pub);
+
+        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        String url = "/WEB-INF/View/resposta.jsp";
+
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
+
+    protected void cad_exemplar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        String msg;
+        int isbn = Integer.parseInt(request.getParameter("isbn"));
+        int numero = Integer.parseInt(request.getParameter("numero"));
+        float preco = Float.parseFloat(request.getParameter("preco"));
+
+        PublicacaoDao pubDao = new PublicacaoDao();
+        Publicacao pub = pubDao.consulta(isbn);
+
+        if (pub == null) {
+            msg = "Ops! Parece que a publicação do exemplar que você está tentando cadastrar não existe no nosso banco. "
+                    + "Cadastre a publicação primeiro.";
+        } else {
+
+            ExemplarDao exDao = new ExemplarDao();
+            int total = exDao.count(isbn);
+
+            if (numero <= total) {
+                total ++;
+                msg = "Sinto muito, mas parece que o número do exemplar que você está tentando cadastrar já existe."
+                        + "Por favor, siga a sequencia, o próximo número é "+total;
+            } else {
+                Exemplar ex = new Exemplar(numero, preco, 0, pub);
+                
+                exDao.cadastro(ex);
+
+                msg = "Cadastro realizado com sucesso!";
+            }
+
+        }
+        
+        request.setAttribute("resposta", msg);
+        String url = "/WEB-INF/View/resposta.jsp";
+
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
+
+    protected void cad_emprestimo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //TODO: implementação do cadastro de emprestimo <Letícia>
+
+        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        String url = "/WEB-INF/View/resposta.jsp";
+
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
+
+    protected void cad_devolucao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //TODO: implementação do cadastro de devolução <Letícia>
+
+        request.setAttribute("resposta", "Cadastro realizado com sucesso!");
+        String url = "/WEB-INF/View/resposta.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
+
+    protected void ver_publicacao(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String query = request.getParameter("query");
+        PublicacaoDao pd = new PublicacaoDao();
+        List<Exemplar> listaExemp = pd.consulta(query);
+        
+        request.setAttribute("lista", listaExemp);
+        
+        String url = "/WEB-INF/View/ver_publicacao.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
+
+    protected void rel_atraso(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //TODO: implementação relatório de devolução atrasada
+        
+        String url = "/WEB-INF/View/rel_atraso.jsp";
+        RequestDispatcher rd = request.getRequestDispatcher(url);
+        rd.forward(request, response);
+    }
+    //</editor-fold>
 }

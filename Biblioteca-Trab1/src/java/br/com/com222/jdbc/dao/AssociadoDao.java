@@ -41,7 +41,9 @@ public class AssociadoDao {
         String sqlEmp = "SELECT emprestimo.*, publicacao.*, exemplar.preco "
                 + "FROM emprestimo JOIN publicacao ON emprestimo.exemplar_ISBN = publicacao.ISBN "
                 + "JOIN exemplar ON emprestimo.exemplar_ISBN = exemplar.publicacao_ISBN "
-                + "WHERE emprestimo.associado_codigo = " + codigo;
+                + "AND emprestimo.exemplar_numero = exemplar.numero "
+                + "WHERE emprestimo.associado_codigo = "+ codigo +" ORDER BY emprestimo.dataRetirada DESC";
+        
 
         List<Emprestimo> lista = new ArrayList<>();
 

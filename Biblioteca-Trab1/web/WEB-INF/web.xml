@@ -8,6 +8,10 @@
         <servlet-name>ControllerFuncionario</servlet-name>
         <servlet-class>br.com.com222.controller.ControllerFuncionario</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ControllerAssociado</servlet-name>
+        <servlet-class>br.com.com222.controller.ControllerAssociado</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/loginFuncionario</url-pattern>
@@ -24,6 +28,12 @@
         <url-pattern>/cad_publicacao</url-pattern>
         <url-pattern>/cad_exemplar</url-pattern>
         <url-pattern>/rel_atraso</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ControllerAssociado</servlet-name>
+        <url-pattern>/index_associado</url-pattern>
+        <url-pattern>/consulta_pub</url-pattern>
+        <url-pattern>/rel_historico</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

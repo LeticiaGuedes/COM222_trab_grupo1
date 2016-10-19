@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=ISO-8859-1" language="java" pageEncoding="UTF-8" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,7 +13,7 @@
         <div style="padding-top: 70px;" class="container">
             <div class="col-sm-6 col-sm-offset-3">
                 <h1 class="page-title">
-                    Cadastro realizado com sucesso!
+                    ${resposta}
                 </h1>
             </div>
         </div>

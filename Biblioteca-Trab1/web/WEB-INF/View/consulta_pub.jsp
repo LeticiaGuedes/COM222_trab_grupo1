@@ -1,4 +1,4 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page contentType="text/html; charset=ISO-8859-1" language="java" pageEncoding="UTF-8" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html>
 <html>
@@ -9,7 +9,7 @@
     </head>
     <body>
         <div>
-            <%@ include file = 'menu_funcionario.html' %>
+        <%@ include file = 'menu_associado.html' %>
         </div>
         <div style="padding-top: 70px;" class="container">
             <div class="col-sm-6 col-sm-offset-3">
@@ -17,8 +17,8 @@
                     Consultar Publicação
                 </h1>
 
-                <form action="ver_publicacao" method="post">
-
+                <form action="consulta_pub" method="post">
+                    
                     <input name="acao" value="true" hidden="true">
                     
                     <div class="form-group form-inline">
@@ -33,7 +33,7 @@
             <div class="col-sm-8 col-sm-offset-2">
                 <!-- A parte de baixo só existe após pesquisar -->
                 <div class="form-group">
-                    <h3>Resultados da Busca ()</h3>
+                    <h3>Resultados da Busca (2)</h3>
                     <hr>
                 </div>
 
@@ -49,7 +49,6 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             <c:forEach var="exemp" items="${lista}">
                                 <tr>
                                     <td>${exemp.ISBN}</td>

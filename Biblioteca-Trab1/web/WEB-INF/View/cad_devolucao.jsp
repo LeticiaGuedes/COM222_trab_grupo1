@@ -17,6 +17,8 @@
                 </h1>
                 <form action="cad_devolucao" method="post">
 
+                    <input name="acao" value="true" hidden="true"></input>
+                    
                     <div class="form-group">
                         <label>N&uacute;mero de Exemplar</label>
                         <input name="exemplar" required class="form-control" type="text">

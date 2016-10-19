@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=ISO-8859-1" language="java" pageEncoding="UTF-8" import="java.sql.*" errorPage="" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -17,6 +17,8 @@
                 </h1>
                 <form action="cad_exemplar" method="post">
 
+                    <input name="acao" value="true" hidden="true"></input>
+                    
                     <div class="form-group">
                         <label>Número</label>
                         <input name="numero" required class="form-control" type="text">

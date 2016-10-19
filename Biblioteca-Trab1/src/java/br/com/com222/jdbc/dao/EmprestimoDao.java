@@ -89,15 +89,15 @@ public class EmprestimoDao {
             
         }
         
-        String sql2 = "UPDATE `emprestimo` SET `status`= 0 WHERE `exemplar_ISBN` = "+ISBN+" AND `exemplar_numero` = "+numExemplar+" AND `status` = 1";
+        //String sql2 = "UPDATE `emprestimo` SET `status`= 0 WHERE `exemplar_ISBN` = "+ISBN+" AND `exemplar_numero` = "+numExemplar+" AND `status` = 1";
         
-        try {
+        /*try {
             PreparedStatement stmt2 = this.connection.prepareStatement(sql2);
             
             stmt2.execute();
             stmt2.close();
         } catch(SQLException e) {
             throw new RuntimeException (e);
-        }
+        }*/
     }
 }
