@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,6 +24,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author wallace
  */
+
+@WebServlet(name = "ControllerFuncionario", loadOnStartup = 1, urlPatterns = {"/cad_associado", "/cad_publicacao", "/cad_exemplar", "/ver_publicacao", "/cad_emprestimo", "/cad_devolucao", "/rel_atraso"})
 public class ControllerFuncionario extends HttpServlet {
 
     /**
@@ -38,40 +41,48 @@ public class ControllerFuncionario extends HttpServlet {
             throws ServletException, IOException, ClassNotFoundException {
 
         Funcionario fc = (Funcionario) request.getSession().getAttribute("funcionario");
-        
+
         //verifica login
         if (fc == null) {
             response.sendRedirect("");
         }
 
+        String userPath = request.getServletPath();
         String acao = request.getParameter("acao");
 
         if (acao == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/view/cad_associado.jsp");
+
+            String url = "/WEB-INF/View/"+userPath+".jsp";
+            
+            RequestDispatcher rd = request.getRequestDispatcher(url);
             rd.forward(request, response);
+            
+        } else {
+            switch (userPath) {
+                case "/cad_associado":
+                    
+                    break;
+                case "/cad_publicacao":
+                        
+                    break;
+                case "/cad_exemplar":
+                    
+                    break;
+                case "/ver_publicacao":
+                    
+                    break;
+                case "/cad_emprestimo":
+                    
+                    break;
+                case "/cad_devolucao":
+                    
+                    break;
+                case "/rel_atraso":
+                    
+                    break;
+            }
         }
-        RequestDispatcher rd;
-        switch (acao) {
-            case "cadastro_associado":
-                int cod = Integer.parseInt(request.getParameter("codigo"));
-                String nome = request.getParameter("nome");
-                String email = request.getParameter("email");
-                String endereco = request.getParameter("endereco");
-                String senha = request.getParameter("senha");
-                String status = request.getParameter("status");
 
-                Associado assoc = new Associado(cod, nome, endereco, email, senha, status, null);
-
-                AssociadoDao ad = new AssociadoDao();
-                ad.cadastro(assoc);
-                rd = request.getRequestDispatcher("/ok.jsp");
-
-                break;
-            default:
-                rd = request.getRequestDispatcher("/WEB-INF/view/cad_associado.jsp");
-
-        }
-        rd.forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -121,4 +132,21 @@ public class ControllerFuncionario extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
+    protected void cad_associado(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        int cod = Integer.parseInt(request.getParameter("codigo"));
+        String nome = request.getParameter("nome");
+        String email = request.getParameter("email");
+        String endereco = request.getParameter("endereco");
+        String senha = request.getParameter("senha");
+        String status = request.getParameter("status");
+
+        Associado assoc = new Associado(cod, nome, endereco, email, senha, status, null);
+
+        AssociadoDao ad = new AssociadoDao();
+        ad.cadastro(assoc);
+
+        RequestDispatcher rd = request.getRequestDispatcher("/ok.jsp");
+        rd.forward(request, response);
+    }
 }

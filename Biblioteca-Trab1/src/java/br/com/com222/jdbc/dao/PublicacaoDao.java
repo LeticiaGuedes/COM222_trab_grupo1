@@ -12,8 +12,12 @@ public class PublicacaoDao {
     
     Connection connection;
 
-    public PublicacaoDao() throws ClassNotFoundException {
-        this.connection = new ConnectionFactory().getConnection();
+    public PublicacaoDao() {
+        try {
+            this.connection = new ConnectionFactory().getConnection();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PublicacaoDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void cadastro(Publicacao pub){
