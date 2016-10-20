@@ -160,11 +160,12 @@ public class EmprestimoDao {
     }
     
     public void devStatus(int id, java.sql.Date dataAt){
-        String sql = "UPDATE `emprestimo` SET `status`= 0 AND `dataDevolucao` = "+dataAt+" WHERE `id` = "+id;
+        String sql = "UPDATE `emprestimo` SET `dataDevolucao` = ? , `status`= 0 WHERE `id` = ?";
         
         try {
             PreparedStatement stmt = this.connection.prepareStatement(sql);
-            
+            stmt.setDate(1, dataAt);
+            stmt.setInt(2, id);
             stmt.execute();
             stmt.close();
         } catch(SQLException e) {
